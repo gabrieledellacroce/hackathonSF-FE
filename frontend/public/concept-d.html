@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Bento Grid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#050505",
+                        card: "#0c0c0c",
+                        orange: "#f97316",
+                        amber: "#fbbf24",
+                    },
+                    fontFamily: {
+                        sans: ['"Satoshi"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap');
+        body { 
+            font-family: 'Satoshi', sans-serif; 
+            background: #050505; 
+            color: #ffffff;
+        }
+        .gradient-mesh {
+            background: 
+                radial-gradient(at 20% 80%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(249, 115, 22, 0.05) 0%, transparent 70%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .border-gradient {
+            border: 1px solid transparent;
+            background: linear-gradient(#0c0c0c, #0c0c0c) padding-box,
+                        linear-gradient(135deg, rgba(249,115,22,0.3), rgba(251,191,36,0.1)) border-box;
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-mesh">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange to-amber flex items-center justify-center text-black font-bold text-sm">M</div>
+                <span class="font-bold text-xl">ModelMarkt</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm text-neutral-400">
+                <a href="#" class="hover:text-white transition">Explore</a>
+                <a href="#" class="hover:text-white transition">Developers</a>
+                <a href="#" class="hover:text-white transition">Pricing</a>
+            </div>
+            <button class="px-5 py-2.5 bg-white text-black font-semibold rounded-full text-sm hover:bg-neutral-200 transition">
+                Open App
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-16 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange/10 border border-orange/20 text-orange text-sm font-medium mb-8">
+                <span class="w-2 h-2 rounded-full bg-orange animate-pulse"></span>
+                Now supporting ONNX models
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-[1.05]">
+                Turn your vision models<br>
+                into <span class="text-gradient">APIs in minutes</span>
+            </h1>
+
+            <p class="text-xl text-neutral-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                The fastest way to deploy ML classification models. Upload, test, integrate — all from one beautiful interface.
+            </p>
+
+            <!-- CTA -->
+            <div class="flex gap-4 justify-center mb-20">
+                <button class="px-8 py-4 bg-gradient-to-r from-orange to-amber text-black font-bold rounded-full text-lg hover:opacity-90 transition shadow-lg shadow-orange/20">
+                    Start Building — Free
+                </button>
+                <button class="px-8 py-4 bg-white/5 border border-white/10 text-white font-semibold rounded-full text-lg hover:bg-white/10 transition">
+                    Watch Demo
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Bento Grid -->
+    <section class="px-6 pb-32">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <!-- Large Card -->
+                <div class="md:col-span-2 border-gradient rounded-3xl p-8 card-hover bg-card min-h-[300px] flex flex-col justify-between">
+                    <div>
+                        <div class="text-sm text-orange font-semibold mb-4">DRAG & DROP</div>
+                        <h3 class="text-3xl font-bold mb-3">Upload any model format</h3>
+                        <p class="text-neutral-400 max-w-md">
+                            Support for .keras, .h5, .onnx, and .pt files. We auto-detect architecture and optimize for inference.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex gap-3">
+                        <div class="px-4 py-2 rounded-xl bg-white/5 text-sm font-mono text-neutral-300">.keras</div>
+                        <div class="px-4 py-2 rounded-xl bg-white/5 text-sm font-mono text-neutral-300">.onnx</div>
+                        <div class="px-4 py-2 rounded-xl bg-white/5 text-sm font-mono text-neutral-300">.h5</div>
+                        <div class="px-4 py-2 rounded-xl bg-orange/20 text-sm font-mono text-orange border border-orange/30">.pt</div>
+                    </div>
+                </div>
+
+                <!-- Small Card -->
+                <div class="border-gradient rounded-3xl p-8 card-hover bg-card flex flex-col justify-between">
+                    <div class="text-sm text-amber font-semibold mb-4">LATENCY</div>
+                    <div>
+                        <div class="text-6xl font-black text-gradient mb-2">42ms</div>
+                        <p class="text-neutral-400">Average inference time</p>
+                    </div>
+                </div>
+
+                <!-- Small Card -->
+                <div class="border-gradient rounded-3xl p-8 card-hover bg-card">
+                    <div class="text-sm text-orange font-semibold mb-4">PLAYGROUND</div>
+                    <h3 class="text-xl font-bold mb-3">Test before you ship</h3>
+                    <p class="text-neutral-400 text-sm">
+                        Visual interface to run inference, inspect outputs, and debug — all in your browser.
+                    </p>
+                    <div class="mt-6 p-4 rounded-xl bg-black/50 border border-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500/20 to-orange/20 flex items-center justify-center">🍎</div>
+                            <div>
+                                <div class="text-sm font-semibold">fresh_apple</div>
+                                <div class="text-xs text-neutral-500">confidence: 98.2%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medium Card -->
+                <div class="md:col-span-2 border-gradient rounded-3xl p-8 card-hover bg-card">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <div class="text-sm text-amber font-semibold mb-4">API INTEGRATION</div>
+                            <h3 class="text-2xl font-bold mb-3">One endpoint, any language</h3>
+                            <p class="text-neutral-400 max-w-sm">
+                                RESTful API with SDKs for Python, Node.js, and cURL. Get your API key in seconds.
+                            </p>
+                        </div>
+                        <div class="hidden md:block p-4 rounded-xl bg-black/50 border border-white/5 font-mono text-sm">
+                            <div class="text-neutral-500">// Node.js</div>
+                            <div class="text-orange">const</div> result = <div class="text-amber inline">await</div> modelmarkt<br>
+                            &nbsp;&nbsp;.predict(<span class="text-green-400">"img.jpg"</span>);
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 px-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center text-sm text-neutral-500">
+            <span>© 2025 ModelMarkt</span>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-white transition">GitHub</a>
+                <a href="#" class="hover:text-white transition">Twitter</a>
+                <a href="#" class="hover:text-white transition">Discord</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

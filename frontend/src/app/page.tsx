@@ -53,9 +53,9 @@ export default function HomePage() {
             <a href="#" className="hover:text-white transition">
               Docs
             </a>
-            <button className="border-b border-white/10 pb-1 hover:border-white transition">
+            <a href="/handler/sign-in" className="border-b border-white/10 pb-1 hover:border-white transition">
               Sign In
-            </button>
+            </a>
           </div>
         </div>
       </nav>
@@ -87,6 +87,67 @@ export default function HomePage() {
           Get Started
         </button>
       </div>
+
+      {/* Spacer */}
+      <div className="h-[20vh]" />
+
+      {/* Three Features - Vertical Layout */}
+      <section className="px-8 pb-32 w-full">
+        <div className="max-w-2xl mx-auto space-y-32">
+          {/* Feature 1 */}
+          <div className="border-b border-white/10 pb-16">
+            <div className="text-xs text-muted mb-4 tracking-widest">01</div>
+            <h2
+              className="text-4xl font-light mb-6"
+              style={{ fontFamily: "var(--font-cormorant)" }}
+            >
+              Upload
+            </h2>
+            <p className="text-muted font-light leading-relaxed text-lg">
+              Drag your trained model file. We handle the rest. Support for TensorFlow, PyTorch,
+              ONNX formats.
+            </p>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="border-b border-white/10 pb-16">
+            <div className="text-xs text-muted mb-4 tracking-widest">02</div>
+            <h2
+              className="text-4xl font-light mb-6"
+              style={{ fontFamily: "var(--font-cormorant)" }}
+            >
+              Test
+            </h2>
+            <p className="text-muted font-light leading-relaxed text-lg">
+              Use our playground to verify inference results. Upload sample images and inspect
+              outputs in real-time.
+            </p>
+          </div>
+
+          {/* Feature 3 */}
+          <div>
+            <div className="text-xs text-muted mb-4 tracking-widest">03</div>
+            <h2
+              className="text-4xl font-light mb-6"
+              style={{ fontFamily: "var(--font-cormorant)" }}
+            >
+              Deploy
+            </h2>
+            <p className="text-muted font-light leading-relaxed text-lg">
+              Generate an API key and integrate into your application. RESTful endpoints with
+              automatic documentation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer - Minimal */}
+      <footer className="border-t border-white/10 py-12 px-8 w-full">
+        <div className="max-w-5xl mx-auto flex justify-between text-xs text-muted font-light">
+          <span>© 2025 ModelMarkt</span>
+          <span>Hackathon Edition</span>
+        </div>
+      </footer>
     </main>
   );
 }

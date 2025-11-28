@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Cyber Glitch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: "#000000",
+                        magenta: "#ff00ff",
+                        cyan: "#00ffff",
+                    },
+                    fontFamily: {
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'JetBrains Mono', monospace; background: #000; color: #fff; }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        .glitch-text {
+            animation: glitch 0.5s infinite;
+            text-shadow: 
+                2px 2px 0 #ff00ff,
+                -2px -2px 0 #00ffff;
+        }
+        
+        .scanlines {
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 2px,
+                rgba(255, 0, 255, 0.05) 2px,
+                rgba(255, 0, 255, 0.05) 4px
+            );
+        }
+        
+        .terminal-border {
+            border: 1px solid #ff00ff;
+            box-shadow: 
+                0 0 10px #ff00ff,
+                inset 0 0 10px #ff00ff;
+        }
+    </style>
+</head>
+<body class="min-h-screen scanlines">
+
+    <!-- Glitch Header -->
+    <header class="p-8 border-b border-magenta/20">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="glitch-text text-6xl font-bold text-center mb-4">MODELMARKT</h1>
+            <p class="text-cyan text-center text-lg">
+                >_ UPLOAD .Keras → GET API → SHIP
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <section class="p-8">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Terminal Interface -->
+            <div class="terminal-border p-8 rounded-lg mb-12">
+                <div class="flex gap-2 mb-6">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="flex gap-2">
+                        <span class="text-green-400">$</span>
+                        <span class="text-cyan">modelmarkt deploy fruit_classifier.keras</span>
+                    </div>
+                    <div class="text-magenta">
+                        [GLITCH] Uploading... 2.3MB<br>
+                        [GLITCH] Optimizing for inference...<br>
+                        [SUCCESS] Endpoint ready: https://api.modelmarkt.dev/v1/predict
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-green-400">$</span>
+                        <span class="text-cyan">curl -X POST $ENDPOINT -F "image=@apple.jpg"</span>
+                    </div>
+                    <div class="text-white">
+                        {"class": "fresh_apple", "confidence": 0.98, "latency_ms": 42}
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="grid grid-cols-2 gap-4">
+                <button class="terminal-border p-6 text-center hover:bg-magenta hover:text-black transition">
+                    <div class="text-2xl font-bold mb-2">UPLOAD</div>
+                    <div class="text-sm">.keras .

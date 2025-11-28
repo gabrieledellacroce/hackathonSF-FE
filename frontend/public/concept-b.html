@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Visual Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#000000",
+                        surface: "#111111",
+                        accent: "#8b5cf6", // violet-500
+                        glow: "rgba(139, 92, 246, 0.15)",
+                        muted: "#888888",
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #000000; color: #ffffff; }
+        
+        .glow-bg {
+            background: radial-gradient(circle at center, var(--glow) 0%, transparent 70%);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 px-6 py-4 flex justify-between items-center glass border-b-0 border-white/10">
+        <div class="text-xl font-bold tracking-tighter flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-accent shadow-[0_0_10px_var(--accent)]"></div>
+            ModelMarkt
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-muted">
+            <a href="#" class="hover:text-white transition">Showcase</a>
+            <a href="#" class="hover:text-white transition">Developers</a>
+            <a href="#" class="hover:text-white transition">About</a>
+        </div>
+        <button class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200 transition">
+            Get Started
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 flex flex-col items-center text-center min-h-[80vh] justify-center">
+        
+        <!-- Background Glow -->
+        <div class="absolute inset-0 glow-bg pointer-events-none"></div>
+
+        <!-- Badge -->
+        <div class="mb-8 inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-medium text-accent border-accent/20 animate-fade-in">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            </span>
+            New: Stable Diffusion Support
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter max-w-4xl leading-[1.1] mb-6 z-10">
+            Turn your vision models <br>
+            into <span class="text-accent">APIs in minutes.</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="text-lg md:text-xl text-muted max-w-2xl mb-10 z-10 leading-relaxed">
+            The lightweight marketplace for fast classification. From local training to global API endpoint in one drag-and-drop.
+        </p>
+
+        <!-- CTA -->
+        <div class="flex gap-4 z-10">
+            <button class="px-8 py-4 bg-accent hover:bg-accent/90 text-white rounded-full font-semibold transition shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                Explore Models
+            </button>
+            <button class="px-8 py-4 glass text-white rounded-full font-semibold hover:bg-white/10 transition">
+                Upload Your Own
+            </button>
+        </div>
+
+        <!-- Visual Element (Abstract) -->
+        <div class="mt-20 relative w-full max-w-3xl aspect-video glass rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0"></div>
+            
+            <!-- Mock UI inside -->
+            <div class="z-10 w-full h-full p-8 flex gap-8 items-center justify-center opacity-80 group-hover:opacity-100 transition duration-700">
+                <div class="w-48 h-48 rounded-xl border border-white/20 bg-black/50 flex items-center justify-center relative">
+                    <!-- Bounding Box animation simulated -->
+                    <div class="absolute inset-4 border-2 border-accent rounded-lg"></div>
+                    <span class="text-xs font-mono absolute -top-3 left-4 bg-accent px-2 rounded">Apple 99%</span>
+                    <div class="w-16 h-16 rounded-full bg-red-500/20 blur-xl"></div>
+                </div>
+                <div class="flex flex-col gap-2 text-left font-mono text-xs text-muted">
+                    <div class="glass p-4 rounded-lg w-64">
+                        <span class="text-accent">POST</span> /v1/classify
+                        <br><br>
+                        <span class="text-white">Result:</span><br>
+                        {<br>
+                        &nbsp;&nbsp;"label": "fresh_apple",<br>
+                        &nbsp;&nbsp;"confidence": 0.992<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 3 Steps Section -->
+    <section class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-12 text-center">
+            <div>
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-surface border border-white/10 flex items-center justify-center text-2xl">📂</div>
+                <h3 class="text-xl font-bold mb-3">1. Upload</h3>
+                <p class="text-muted">Push your .keras or .onnx models directly. We auto-detect inputs/outputs.</p>
+            </div>
+            <div>
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-surface border border-white/10 flex items-center justify-center text-2xl text-accent">⚡️</div>
+                <h3 class="text-xl font-bold mb-3">2. Test</h3>
+                <p class="text-muted">Use the visual playground to verify inference results immediately.</p>
+            </div>
+            <div>
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-surface border border-white/10 flex items-center justify-center text-2xl">🔑</div>
+                <h3 class="text-xl font-bold mb-3">3. Integrate</h3>
+                <p class="text-muted">Grab an API key and call your new endpoint from any app.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

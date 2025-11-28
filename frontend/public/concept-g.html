@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Bold Stack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: "#0f172a",
+                        slate: "#1e293b",
+                        highlight: "#f97316",
+                        mint: "#34d399",
+                        lemon: "#facc15"
+                    },
+                    fontFamily: {
+                        heading: ['"Space Grotesk"', 'sans-serif'],
+                        mono: ['"Chivo Mono"', 'monospace']
+                    },
+                    boxShadow: {
+                        card: "12px 12px 0 #020617"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Chivo+Mono:wght@400;500&display=swap');
+        body {
+            background: #020617;
+            color: #e2e8f0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .noise {
+            position: fixed;
+            inset: 0;
+            background-image: url('https://uploads-ssl.webflow.com/5f2a6c901b649d2ef74a09df/6047c52a4896f10dfaec75b8_grain.png');
+            opacity: 0.08;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <div class="noise"></div>
+
+    <!-- frame -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-8 py-12">
+
+        <!-- Nav -->
+        <header class="flex items-center justify-between py-4 border-b border-white/10">
+            <div>
+                <p class="text-xs uppercase text-slate-400 font-mono tracking-[0.3em]">ModelMarkt</p>
+                <p class="text-2xl font-semibold">Frontend Lab</p>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm text-slate-300">
+                <a href="#" class="hover:text-white transition">Docs</a>
+                <a href="#" class="hover:text-white transition">Models</a>
+                <a href="#" class="hover:text-white transition">Playground</a>
+            </nav>
+            <button class="bg-highlight text-black font-semibold px-4 py-2 rounded shadow-card">Launch</button>
+        </header>
+
+        <!-- Hero -->
+        <section class="py-16 grid lg:grid-cols-2 gap-12">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 bg-slate px-4 py-2 rounded-full text-xs font-mono uppercase tracking-[0.2em]">
+                    <span class="w-2 h-2 rounded-full bg-mint"></span> Stack-ready
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+                    A headless control room for your custom vision models.
+                </h1>
+                <p class="text-lg text-slate-300">
+                    ModelMarkt wraps uploads, schema detection, and StackAuth-based API keys into one ruthless workflow. Plug your `.keras` exports, hit deploy, watch inference logs in real time.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-mint text-charcoal font-semibold px-8 py-4 rounded shadow-card">Start a deploy</button>
+                    <button class="bg-transparent border border-white/20 px-8 py-4 rounded font-semibold">View API spec</button>
+                </div>
+            </div>
+
+            <!-- Flow board -->
+            <div class="space-y-6">
+                <div class="bg-slate/80 rounded-3xl p-6 border border-white/10 shadow-card">
+                    <div class="flex items-center justify-between text-xs uppercase font-mono text-slate-300 mb-4">
+                        <span>Deploy monitor</span>
+                        <span>live</span>
+                    </div>
+                    <div class="space-y-4 text-sm font-mono">
+                        <div class="p-4 rounded-2xl bg-charcoal border border-white/5 flex justify-between">
+                            <span>fruit-quality.keras</span>
+                            <span class="text-mint">uploaded</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-charcoal border border-white/5 flex justify-between">
+                            <span>schema detection</span>
+                            <span class="text-lemon">inputs: RGB · output: 3 classes</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-charcoal border border-white/5 flex justify-between">
+                            <span>endpoint</span>
+                            <span class="text-highlight">POST ${BACKEND_URL}/model/af12</span>
+                        </div>
+                        <pre class="p-4 rounded-2xl bg-black/60 text-xs text-green-300 whitespace-pre-wrap">
+{
+  "class": "fresh",
+  "confidence": 0.97,
+  "latency_ms": 39
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate/70 rounded-2xl p-4 border border-white/5">
+                        <p class="text-sm text-slate-400">Total uploads</p>
+                        <p class="text-3xl font-bold">184</p>
+                    </div>
+                    <div class="bg-slate/70 rounded-2xl p-4 border border-white/5">
+                        <p class="text-sm text-slate-400">Avg latency</p>
+                        <p class="text-3xl font-bold">38ms</p>
+                    </div>
+                    <div class="bg-slate/70 rounded-2xl p-4 border border-white/5">
+                        <p class="text-sm text-slate-400">API keys</p>
+                        <p class="text-3xl font-bold">Auto</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Split section -->
+        <section class="py-16 grid md:grid-cols-2 gap-8">
+            <div class="bg-slate rounded-3xl p-6 border border-highlight/30 shadow-card space-y-4">
+                <p class="text-xs font-mono uppercase tracking-[0.3em] text-lemon">workflow</p>
+                <h2 class="text-2xl font-semibold">Your repo stays clean</h2>
+                <p class="text-slate-300">Frontend and backend stay decoupled. Everything routes through `BACKEND_URL`, so you can mock requests with MSW or fixtures when the service naps.</p>
+                <ul class="space-y-3 text-slate-200 text-sm font-mono">
+                    <li>→ Upload models through UI / CLI</li>
+                    <li>→ Update `models.json` in backend store</li>
+                    <li>→ Generate keys via `/apikey/create`</li>
+                    <li>→ Test inference via live playground</li>
+                </ul>
+            </div>
+            <div class="bg-slate rounded-3xl p-6 border border-mint/30 shadow-card space-y-6">
+                <p class="text-xs font-mono uppercase tracking-[0.3em] text-mint">frontend kit</p>
+                <h2 class="text-2xl font-semibold">Stack for concept build</h2>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="bg-charcoal rounded-2xl p-4 border border-white/5">
+                        <p class="text-slate-400">Framework</p>
+                        <p class="font-semibold">Next.js 15 App Router</p>
+                    </div>
+                    <div class="bg-charcoal rounded-2xl p-4 border border-white/5">
+                        <p class="text-slate-400">Styling</p>
+                        <p class="font-semibold">Tailwind + Radix</p>
+                    </div>
+                    <div class="bg-charcoal rounded-2xl p-4 border border-white/5">
+                        <p class="text-slate-400">Data layer</p>
+                        <p class="font-semibold">SWR + Fetch</p>
+                    </div>
+                    <div class="bg-charcoal rounded-2xl p-4 border border-white/5">
+                        <p class="text-slate-400">Mocks</p>
+                        <p class="font-semibold">MSW / fixtures</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="py-16 border-t border-white/10">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+                <div>
+                    <p class="text-xs uppercase font-mono text-slate-400 tracking-[0.3em]">Ship plan</p>
+                    <h3 class="text-3xl font-semibold">From blank repo to live models in 6 steps</h3>
+                </div>
+                <button class="text-highlight font-semibold text-sm">Download checklist →</button>
+            </div>
+            <div class="space-y-6">
+                <div class="flex gap-6 items-start">
+                    <div class="w-12 h-12 rounded-full bg-highlight text-black flex items-center justify-center font-bold">01</div>
+                    <div>
+                        <h4 class="text-xl font-semibold">Scaffold Next.js repo</h4>
+                        <p class="text-slate-400">Configure `.env` with `BACKEND_URL`, wire StackAuth profile data.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="w-12 h-12 rounded-full bg-mint text-charcoal flex items-center justify-center font-bold">02</div>
+                    <div>
+                        <h4 class="text-xl font-semibold">Mock backend contract</h4>
+                        <p class="text-slate-400">Use MSW handlers for `/models`, `/model/:id`, `/upload`, and key endpoints.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="w-12 h-12 rounded-full bg-lemon text-charcoal flex items-center justify-center font-bold">03</div>
+                    <div>
+                        <h4 class="text-xl font-semibold">Ship playground UI</h4>
+                        <p class="text-slate-400">Drag & drop uploads, response viewer, latency indicator, and shareable curl snippets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-8 border-t border-white/10 text-sm text-slate-500 flex justify-between">
+            <span>© 2025 ModelMarkt Hackathon</span>
+            <span>Built for the SF sprint</span>
+        </footer>
+    </div>
+</body>
+</html>
+

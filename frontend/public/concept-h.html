@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Brutal Dark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: "#000000",
+                        white: "#ffffff", 
+                        acid: "#00ff88",
+                    },
+                    fontFamily: {
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    borderWidth: {
+                        '16': '16px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background: #000; color: #fff; }
+        .brutal-border { border: 4px solid #fff; }
+        .acid-border { border: 4px solid #00ff88; }
+        .text-stroke { -webkit-text-stroke: 1px #00ff88; color: transparent; }
+        .overlap { margin-top: -2rem; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Hero - Brutalist Layout -->
+    <section class="p-8">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Asymmetric Grid -->
+            <div class="grid grid-cols-3 gap-8 items-start">
+                
+                <!-- Left Column -->
+                <div class="col-span-2">
+                    <h1 class="text-[6rem] font-bold leading-[0.9] tracking-tighter">
+                        TURN YOUR<br>
+                        <span class="text-acid">VISION</span><br>
+                        MODELS INTO
+                    </h1>
+                </div>
+
+                <!-- Right Column -->
+                <div class="self-end">
+                    <div class="acid-border p-4">
+                        <div class="text-6xl font-bold">APIS</div>
+                        <div class="text-2xl acid-border-t mt-2 pt-2">IN MINUTES</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Overlapping Element -->
+            <div class="overlap">
+                <div class="brutal-border p-6 bg-black">
+                    <p class="text-xl">
+                        Zero configuration. Just drag your .keras file and get a production-ready endpoint. 
+                        <span class="text-acid">No Docker. No DevOps. No bullshit.</span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="p-8 mt-32">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 gap-8">
+            
+            <div class="brutal-border p-8">
+                <div class="text-acid text-sm mb-4">FOR DEVELOPERS</div>
+                <h2 class="text-4xl font-bold mb-4">API First</h2>
+                <p class="text-lg mb-6">RESTful endpoints with automatic OpenAPI specs. SDKs for Python, Node.js, curl.</p>
+                <button class="w-full brutal-border p-4 text-lg font-bold hover:bg-white hover:text-black transition">
+                    View Documentation →
+                </button>
+            </div>
+
+            <div class="acid-border p-8">
+                <div class="text-black text-sm mb-4">GET STARTED</div>
+                <h2 class="text-4xl font-bold mb-4">Free Tier</h2>
+                <p class="text-lg mb-6">5 models, 1000 inferences/month. No credit card required.</p>
+                <button class="w-full bg-acid text-black p-4 text-lg font-bold hover:bg-white transition">
+                    Create Account ↓
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>

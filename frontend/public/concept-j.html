@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Minimal Zen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#0a0a0a",
+                        surface: "#111111",
+                        accent: "#ffffff",
+                        muted: "#666666",
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0a0a0a; 
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .thin-border { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .spacer { height: 20vh; }
+        .typing::after {
+            content: '█';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Ultra Minimal Nav -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="text-sm font-light tracking-wider">MODELMARKT</div>
+            <div class="flex gap-8 text-xs text-muted font-light">
+                <a href="#" class="hover:text-white transition">Models</a>
+                <a href="#" class="hover:text-white transition">Docs</a>
+                <button class="thin-border pb-1 hover:border-white transition">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero - Extreme Minimalism -->
+    <section class="min-h-screen flex flex-col items-center px-8 pt-24">
+        <!-- Text centered vertically in its own viewport band (ignores terminal height) -->
+        <div class="w-full min-h-[60vh] flex items-center justify-center">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                
+                <!-- Large Serif Headline -->
+                <h1 class="serif text-7xl md:text-8xl font-light leading-[1.1] mb-8 tracking-tight">
+                    Turn your vision models<br>
+                    into <span class="font-normal italic">APIs in minutes</span>
+                </h1>
+
+                <!-- Thin Subtitle -->
+                <p class="text-muted text-lg font-light max-w-xl mx-auto leading-relaxed">
+                    A minimal marketplace for deploying machine learning models. 
+                    Upload once, deploy everywhere.
+                </p>
+
+            </div>
+        </div>
+        
+        <!-- Terminal Block - Positioned below text -->
+        <div class="max-w-2xl mx-auto mt-12 mb-16">
+            <div class="bg-surface border border-white/10 rounded-lg overflow-hidden">
+                <div class="bg-surface border border-white/10 rounded-lg overflow-hidden">
+                    <div class="px-4 py-2 border-b border-white/5 flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                        <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                        <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                        <span class="ml-4 text-xs text-muted font-mono">zsh — modelmarkt-cli</span>
+                    </div>
+                    <div class="p-6 font-mono text-sm space-y-3 text-white/80">
+                        <div class="flex gap-3">
+                            <span class="text-white/40">❯</span>
+                            <span class="text-white/90">modelmarkt deploy fruit-classifier.keras</span>
+                        </div>
+                        <div class="text-muted pl-6 text-xs font-light">
+                            ✓ Model uploaded (2.3MB)<br>
+                            ✓ Inference endpoint ready<br>
+                            ✓ API key generated
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <span class="text-white/40">❯</span>
+                            <span class="text-white/90">curl api.modelmarkt.dev/v1/predict -F "img=@apple.jpg"</span>
+                        </div>
+                        <div class="text-white/60 pl-6 text-xs font-light">
+                            {"class": "fresh_apple", "confidence": 0.98}
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <span class="text-white/40">❯</span>
+                            <span class="typing text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single CTA -->
+            <div class="flex justify-center">
+                <button class="thin-border px-12 py-4 text-sm font-light tracking-wider hover:border-white transition">
+                    Get Started
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Spacer -->
+    <div class="spacer"></div>
+
+    <!-- Three Features - Vertical Layout -->
+    <section class="px-8 pb-32">
+        <div class="max-w-2xl mx-auto space-y-32">
+            
+            <!-- Feature 1 -->
+            <div class="thin-border pb-16">
+                <div class="text-xs text-muted mb-4 tracking-widest">01</div>
+                <h2 class="serif text-4xl font-light mb-6">Upload</h2>
+                <p class="text-muted font-light leading-relaxed text-lg">
+                    Drag your trained model file. We handle the rest. 
+                    Support for TensorFlow, PyTorch, ONNX formats.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="thin-border pb-16">
+                <div class="text-xs text-muted mb-4 tracking-widest">02</div>
+                <h2 class="serif text-4xl font-light mb-6">Test</h2>
+                <p class="text-muted font-light leading-relaxed text-lg">
+                    Use our playground to verify inference results. 
+                    Upload sample images and inspect outputs in real-time.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div>
+                <div class="text-xs text-muted mb-4 tracking-widest">03</div>
+                <h2 class="serif text-4xl font-light mb-6">Deploy</h2>
+                <p class="text-muted font-light leading-relaxed text-lg">
+                    Generate an API key and integrate into your application. 
+                    RESTful endpoints with automatic documentation.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer - Minimal -->
+    <footer class="thin-border py-12 px-8">
+        <div class="max-w-5xl mx-auto flex justify-between text-xs text-muted font-light">
+            <span>© 2025 ModelMarkt</span>
+            <span>Hackathon Edition</span>
+        </div>
+    </footer>
+
+</body>
+</html>
