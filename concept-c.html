@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Noir Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#0a0a0a",
+                        terminal: "#0d1117",
+                        lime: "#84cc16",
+                        cyan: "#22d3ee",
+                    },
+                    fontFamily: {
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap');
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background: #0a0a0a; 
+            color: #e5e5e5;
+        }
+        .scanline {
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px
+            );
+        }
+        .glow-lime { text-shadow: 0 0 20px rgba(132, 204, 22, 0.5); }
+        .border-glow { box-shadow: 0 0 0 1px rgba(132, 204, 22, 0.2); }
+        .typing::after {
+            content: '█';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(132, 204, 22, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(132, 204, 22, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+    </style>
+</head>
+<body class="min-h-screen grid-bg">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-bg/90 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div class="font-mono text-lime font-semibold tracking-tight text-lg">
+                ~/modelmarkt
+            </div>
+            <div class="flex items-center gap-8 text-sm text-neutral-400 font-mono">
+                <a href="#" class="hover:text-lime transition">/models</a>
+                <a href="#" class="hover:text-lime transition">/docs</a>
+                <a href="#" class="hover:text-lime transition">/api</a>
+                <button class="px-4 py-1.5 border border-lime/50 text-lime hover:bg-lime hover:text-black transition font-medium">
+                    login --ssh
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center justify-center px-6 pt-14">
+        <div class="max-w-4xl w-full">
+            
+            <!-- ASCII Header -->
+            <pre class="text-lime/30 text-[10px] md:text-xs font-mono mb-8 hidden md:block">
+ __  __           _      _ __  __            _    _   
+|  \/  | ___   __| | ___| |  \/  | __ _ _ __| | _| |_ 
+| |\/| |/ _ \ / _` |/ _ \ | |\/| |/ _` | '__| |/ / __|
+| |  | | (_) | (_| |  __/ | |  | | (_| | |  |   &lt;| |_ 
+|_|  |_|\___/ \__,_|\___|_|_|  |_|\__,_|_|  |_|\_\\__|
+            </pre>
+
+            <!-- Main Copy -->
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.1]">
+                Turn your vision models<br>
+                into <span class="text-lime glow-lime">APIs in minutes.</span>
+            </h1>
+
+            <p class="text-xl text-neutral-400 max-w-2xl mb-10 leading-relaxed">
+                No infrastructure. No Docker. No BS.<br>
+                Upload <span class="text-lime font-mono">.keras</span> → Get endpoint → Ship.
+            </p>
+
+            <!-- Terminal Block -->
+            <div class="bg-terminal rounded-lg border border-white/10 overflow-hidden mb-10 border-glow">
+                <div class="px-4 py-2 border-b border-white/5 flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/70"></div>
+                    <span class="ml-4 text-xs text-neutral-500 font-mono">zsh — modelmarkt-cli</span>
+                </div>
+                <div class="p-6 font-mono text-sm space-y-3">
+                    <div class="flex gap-3">
+                        <span class="text-lime">❯</span>
+                        <span class="text-neutral-300">modelmarkt deploy fruit-classifier.keras</span>
+                    </div>
+                    <div class="text-neutral-500 pl-6">
+                        ✓ Model uploaded (2.3MB)<br>
+                        ✓ Inference endpoint ready<br>
+                        ✓ API key generated
+                    </div>
+                    <div class="flex gap-3 pt-2">
+                        <span class="text-lime">❯</span>
+                        <span class="text-neutral-300">curl api.modelmarkt.dev/v1/predict -F "img=@apple.jpg"</span>
+                    </div>
+                    <div class="text-cyan pl-6">
+                        {"class": "fresh_apple", "confidence": 0.98}
+                    </div>
+                    <div class="flex gap-3 pt-2">
+                        <span class="text-lime">❯</span>
+                        <span class="typing text-neutral-500"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="flex gap-4">
+                <button class="px-8 py-4 bg-lime text-black font-bold rounded hover:bg-lime/90 transition flex items-center gap-2">
+                    <span>Get Started</span>
+                    <span class="font-mono text-sm opacity-70">→</span>
+                </button>
+                <button class="px-8 py-4 border border-white/20 text-white font-medium rounded hover:border-white/40 transition">
+                    View Examples
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-32 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-1">
+                
+                <div class="p-8 border border-white/5 hover:border-lime/30 transition group">
+                    <div class="font-mono text-lime mb-4 text-sm">01</div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-lime transition">Zero Config</h3>
+                    <p class="text-neutral-400 leading-relaxed">
+                        Drop your model file. We detect inputs, outputs, and optimal batch size automatically.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-white/5 hover:border-lime/30 transition group">
+                    <div class="font-mono text-lime mb-4 text-sm">02</div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-lime transition">Live Playground</h3>
+                    <p class="text-neutral-400 leading-relaxed">
+                        Test inference in-browser before writing a single line of integration code.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-white/5 hover:border-lime/30 transition group">
+                    <div class="font-mono text-lime mb-4 text-sm">03</div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-lime transition">API Keys</h3>
+                    <p class="text-neutral-400 leading-relaxed">
+                        Generate keys instantly. Track usage. Revoke anytime. Powered by StackAuth.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 px-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center text-sm text-neutral-500 font-mono">
+            <span>© 2025 modelmarkt</span>
+            <span class="text-lime/50">hackathon edition</span>
+        </div>
+    </footer>
+
+</body>
+</html>

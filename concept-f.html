@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Gradient Glass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: "#07060A",
+                        surface: "rgba(13,13,18,0.6)",
+                        accent: "#7C3AED",
+                        accentSoft: "#C084FC",
+                        neon: "#22D3EE"
+                    },
+                    fontFamily: {
+                        sans: ['"Sora"', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+        body {
+            font-family: 'Sora', sans-serif;
+            background: radial-gradient(circle at top, #1F1147 0%, #09090F 45%, #040307 100%);
+            color: #f8fafc;
+        }
+        .glass {
+            background: rgba(10, 10, 20, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(30px);
+        }
+        .grid-overlay::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 120px 120px;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen grid-overlay">
+
+    <!-- Glow accents -->
+    <div class="pointer-events-none fixed inset-x-0 top-[-200px] h-[500px] opacity-40 blur-3xl" style="background: radial-gradient(circle,#a855f7,transparent 60%)"></div>
+    <div class="pointer-events-none fixed inset-y-0 right-[-200px] w-[400px] opacity-40 blur-[160px]" style="background: radial-gradient(circle,#22d3ee,transparent 70%)"></div>
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 bg-ink/70 backdrop-blur border-b border-white/5">
+        <div class="max-w-6xl mx-auto h-16 px-6 flex items-center justify-between text-sm">
+            <span class="font-semibold tracking-tight">ModelMarkt</span>
+            <nav class="flex items-center gap-6 text-slate-300">
+                <a href="#" class="hover:text-white transition">Models</a>
+                <a href="#" class="hover:text-white transition">Playground</a>
+                <a href="#" class="hover:text-white transition">API Docs</a>
+            </nav>
+            <button class="px-4 py-2 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 transition">
+                Launch App
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 pb-24">
+
+        <!-- Hero -->
+        <section class="pt-20 pb-16 flex flex-col gap-14 lg:flex-row lg:items-center">
+            <div class="flex-1 space-y-8">
+                <span class="px-4 py-1 rounded-full glass text-xs font-mono text-slate-300 uppercase tracking-[0.25em]">Hackathon drop</span>
+                <h1 class="text-4xl md:text-6xl font-semibold leading-tight">
+                    Deploy computer vision models with <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-accentSoft to-neon">two clicks</span>.
+                </h1>
+                <p class="text-lg text-slate-300 max-w-xl">
+                    Upload a `.keras` file, auto-generate the REST surface, and inspect predictions live without touching infra. ModelMarkt is the launchpad for builders shipping custom AI in record time.
+                </p>
+                <div class="flex gap-4 flex-wrap">
+                    <button class="bg-accent text-white px-8 py-3 rounded-full font-semibold shadow-[0_15px_60px_rgba(124,58,237,0.35)]">
+                        Get early access
+                    </button>
+                    <button class="glass px-8 py-3 rounded-full font-semibold text-white/80 hover:text-white transition">
+                        Watch demo
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-4 text-sm">
+                    <div class="glass rounded-2xl p-4">
+                        <p class="text-xs uppercase tracking-wide text-slate-400">Deployments</p>
+                        <p class="text-3xl font-semibold">2,417</p>
+                    </div>
+                    <div class="glass rounded-2xl p-4">
+                        <p class="text-xs uppercase tracking-wide text-slate-400">Median latency</p>
+                        <p class="text-3xl font-semibold">41ms</p>
+                    </div>
+                    <div class="glass rounded-2xl p-4 col-span-2 md:col-span-1">
+                        <p class="text-xs uppercase tracking-wide text-slate-400">StackAuth-ready</p>
+                        <p class="text-xl font-semibold text-neon font-mono mt-1">API keys auto</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload card -->
+            <div class="flex-1 w-full">
+                <div class="glass rounded-3xl p-8 shadow-[0_30px_80px_rgba(0,0,0,0.45)] border border-white/10">
+                    <div class="flex items-center justify-between mb-6 text-sm text-slate-300 font-mono">
+                        <span>modelmarkt-cli</span>
+                        <span>live session</span>
+                    </div>
+                    <div class="space-y-6 text-sm font-mono">
+                        <div class="flex items-start gap-3">
+                            <span class="text-accent text-lg">1</span>
+                            <div>
+                                <p class="text-white">Upload file</p>
+                                <p class="text-slate-400">fruit-freshness.keras · 2.1MB</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-accent text-lg">2</span>
+                            <div>
+                                <p class="text-white">Auto schema</p>
+                                <p class="text-slate-400">inputs detected · batch size tuned</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-accent text-lg">3</span>
+                            <div>
+                                <p class="text-white">Endpoint ready</p>
+                                <div class="glass rounded-xl px-4 py-3 mt-2 text-xs text-neon">
+                                    POST ${BACKEND_URL}/model/65d12<br>
+                                    Authorization: Bearer sk_live_x91...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-neon/80 text-xs">
+                            {"class": "ripe", "confidence": 0.982, "latency_ms": 37}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <div>
+                    <p class="text-sm font-mono text-slate-400 uppercase tracking-[0.3em]">Why ModelMarkt</p>
+                    <h2 class="text-3xl font-semibold mt-2">Purpose-built for hackathon velocity</h2>
+                </div>
+                <button class="text-neon font-mono text-sm">Read the API contract →</button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <article class="glass rounded-3xl p-6 space-y-3">
+                    <p class="text-xs font-mono text-slate-400">01</p>
+                    <h3 class="text-xl font-semibold">Zero-ops deployments</h3>
+                    <p class="text-slate-300">Everything runs through `BACKEND_URL`. No docker, no infra playbooks—just upload and go.</p>
+                </article>
+                <article class="glass rounded-3xl p-6 space-y-3">
+                    <p class="text-xs font-mono text-slate-400">02</p>
+                    <h3 class="text-xl font-semibold">Live playground</h3>
+                    <p class="text-slate-300">Try inference inside the browser with MSW-powered mocks when the backend sleeps.</p>
+                </article>
+                <article class="glass rounded-3xl p-6 space-y-3">
+                    <p class="text-xs font-mono text-slate-400">03</p>
+                    <h3 class="text-xl font-semibold">StackAuth sync</h3>
+                    <p class="text-slate-300">Generate API keys per profile, display them once, and keep secrets server-side.</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
+
