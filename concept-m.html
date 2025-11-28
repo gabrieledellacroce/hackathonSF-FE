@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Digital Craft</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        canvas: "#ffffff",
+                        ink: "#1a1a1a",
+                        accent: "#6366f1",
+                        coral: "#f87171",
+                        sage: "#4ade80"
+                    },
+                    fontFamily: {
+                        sans: ['"Instrument Sans"', 'sans-serif'],
+                        mono: ['"CommitMono"', 'monospace']
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        'medium': '0 8px 32px rgba(0, 0, 0, 0.12)',
+                        'hard': '0 20px 60px rgba(0, 0, 0, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+        }
+
+        .paper-texture {
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.02) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(248, 113, 113, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px, 60px 60px;
+        }
+
+        .floating-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .floating-card:hover {
+            transform: translateY(-12px) rotate(1deg);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #6366f1, #4ade80);
+            animation: progress 2s ease-out forwards;
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 85%; }
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            50.1%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen paper-texture">
+
+    <!-- Navigation -->
+    <nav class="border-b border-gray-100 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="text-xl font-semibold tracking-tight text-ink">ModelMarkt</div>
+            <div class="flex items-center gap-8 text-sm text-gray-600">
+                <a href="#" class="hover:text-accent transition">Models</a>
+                <a href="#" class="hover:text-accent transition">Playground</a>
+                <a href="#" class="hover:text-accent transition">Docs</a>
+                <button class="px-4 py-2 bg-accent text-white rounded-lg font-medium hover:bg-accent/90 transition">
+                    Sign In
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-16">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-20">
+            <div class="inline-flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full text-xs font-mono text-gray-600 mb-8">
+                <span class="w-2 h-2 bg-sage rounded-full"></span>
+                Hackathon-ready
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-8">
+                Craft APIs from your<br>
+                <span class="text-accent">vision models</span>
+            </h1>
+
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+                The cleanest way to deploy computer vision. Upload your trained model, get an endpoint.
+                No containers, no config files, no headaches.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="px-8 py-4 bg-accent text-white font-semibold rounded-lg shadow-soft hover:shadow-medium transition">
+                    Start Building
+                </button>
+                <button class="px-8 py-4 border border-gray-200 text-gray-700 rounded-lg hover:border-accent hover:text-accent transition">
+                    See Examples
+                </button>
+            </div>
+        </section>
+
+        <!-- Interactive Workflow -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-semibold">Deploy in 3 steps</h2>
+                    <div class="text-sm text-gray-500 font-mono">Live session</div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Step 1 -->
+                    <div class="floating-card bg-gradient-to-br from-accent/5 to-accent/10 rounded-xl p-6 border border-accent/20">
+                        <div class="w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center font-bold mb-4">1</div>
+                        <h3 class="font-semibold mb-2">Upload Model</h3>
+                        <p class="text-sm text-gray-600 mb-4">Drop your .keras file. We detect inputs, outputs, and optimal settings automatically.</p>
+                        <div class="bg-white/80 rounded-lg p-3 text-xs font-mono text-gray-700">
+                            fruit-classifier.keras<br>
+                            <span class="text-accent">✓ Uploaded</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="floating-card bg-gradient-to-br from-coral/5 to-coral/10 rounded-xl p-6 border border-coral/20">
+                        <div class="w-8 h-8 bg-coral text-white rounded-full flex items-center justify-center font-bold mb-4">2</div>
+                        <h3 class="font-semibold mb-2">Configure API</h3>
+                        <p class="text-sm text-gray-600 mb-4">Auto-generate REST endpoints with StackAuth key management.</p>
+                        <div class="space-y-2">
+                            <div class="bg-white/80 rounded-lg p-3 text-xs font-mono text-gray-700">
+                                POST /model/ab12<br>
+                                Auth: Bearer sk_...
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="floating-card bg-gradient-to-br from-sage/5 to-sage/10 rounded-xl p-6 border border-sage/20">
+                        <div class="w-8 h-8 bg-sage text-white rounded-full flex items-center justify-center font-bold mb-4">3</div>
+                        <h3 class="font-semibold mb-2">Test & Ship</h3>
+                        <p class="text-sm text-gray-600 mb-4">Run inference tests and get production-ready curl commands.</p>
+                        <div class="bg-gray-900 rounded-lg p-3 text-xs font-mono text-green-400">
+                            <div class="typing-cursor">
+                                {"class": "fresh", "confidence": 0.96}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="mb-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Built for the modern stack</h2>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Frontend-first architecture</h3>
+                                <p class="text-gray-600 text-sm">Everything routes through BACKEND_URL. Use MSW for offline development.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 bg-coral/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Real-time playground</h3>
+                                <p class="text-gray-600 text-sm">Test models instantly with drag-and-drop file uploads and live response viewing.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 bg-sage/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">StackAuth security</h3>
+                                <p class="text-gray-600 text-sm">API keys generated per user, displayed once, stored server-side. No secrets in frontend.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-medium border border-gray-100 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm font-mono text-gray-500">API Response</span>
+                        <span class="px-2 py-1 bg-sage/10 text-sage text-xs rounded font-mono">200 OK</span>
+                    </div>
+                    <pre class="font-mono text-sm text-gray-800 bg-gray-50 p-4 rounded-lg overflow-x-auto">
+{
+  "predictions": [
+    {
+      "class": "fresh_apple",
+      "confidence": 0.967,
+      "bbox": [120, 80, 200, 160]
+    }
+  ],
+  "latency_ms": 42,
+  "model_version": "v2.1"
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="text-center">
+            <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-8">
+                <h2 class="text-2xl font-semibold mb-8">Trusted by developers</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="text-3xl font-bold text-accent mb-1">2,847</div>
+                        <div class="text-gray-600 text-sm">Models deployed</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-coral mb-1">38ms</div>
+                        <div class="text-gray-600 text-sm">Avg response time</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-sage mb-1">99.8%</div>
+                        <div class="text-gray-600 text-sm">Uptime</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-accent mb-1">12h</div>
+                        <div class="text-gray-600 text-sm">Avg deploy time</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-gray-100 mt-20 py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
+            © 2025 ModelMarkt. Built for hackathons, scaled for production.
+        </div>
+    </footer>
+
+</body>
+</html>

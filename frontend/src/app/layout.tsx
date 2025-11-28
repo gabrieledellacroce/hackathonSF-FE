@@ -1,5 +1,3 @@
-"use client";
-
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
