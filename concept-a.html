@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModelMarkt - Developer Workbench</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#09090b", // zinc-950
+                        surface: "#18181b", // zinc-900
+                        border: "#27272a", // zinc-800
+                        primary: "#fafafa", // zinc-50
+                        muted: "#a1a1aa", // zinc-400
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #fafafa; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    
+    <!-- Navbar -->
+    <nav class="border-b border-border h-16 flex items-center justify-between px-8 bg-background/80 backdrop-blur sticky top-0 z-50">
+        <div class="font-bold text-xl tracking-tight">ModelMarkt</div>
+        <div class="flex gap-6 text-sm font-medium text-muted">
+            <a href="#" class="hover:text-primary transition">Models</a>
+            <a href="#" class="hover:text-primary transition">Docs</a>
+            <a href="#" class="hover:text-primary transition">Pricing</a>
+        </div>
+        <button class="bg-primary text-black px-4 py-2 rounded text-sm font-semibold hover:bg-gray-200 transition">Sign In</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="flex-1 flex flex-col md:flex-row items-center justify-center px-8 py-24 gap-16 max-w-7xl mx-auto">
+        <!-- Left: Copy -->
+        <div class="flex-1 space-y-8">
+            <div class="inline-block px-3 py-1 rounded-full border border-border bg-surface text-xs font-mono text-muted">
+                v1.0 Hackathon Edition
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+                Turn your vision models into <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">APIs in minutes.</span>
+            </h1>
+            <p class="text-xl text-muted leading-relaxed max-w-lg">
+                Stop configuring inference servers. Upload your <code class="bg-surface border border-border px-1 py-0.5 rounded text-sm font-mono text-white">.keras</code> model and get a production-ready REST endpoint instantly.
+            </p>
+            <div class="flex gap-4 pt-4">
+                <button class="bg-primary text-black px-8 py-3 rounded font-semibold text-lg hover:bg-gray-200 transition flex items-center gap-2">
+                    Start Shipping
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </button>
+                <button class="px-8 py-3 rounded font-semibold text-lg border border-border hover:bg-surface transition text-muted hover:text-primary">
+                    Read Docs
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Terminal/Code Visual -->
+        <div class="flex-1 w-full max-w-lg">
+            <div class="rounded-xl border border-border bg-surface overflow-hidden shadow-2xl">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-[#09090b]">
+                    <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                    <div class="ml-auto text-xs text-muted font-mono">bash</div>
+                </div>
+                <div class="p-6 font-mono text-sm space-y-4 overflow-x-auto">
+                    <div class="flex gap-2">
+                        <span class="text-green-500">$</span>
+                        <span class="text-muted">curl -X POST https://api.modelmarkt.dev/v1/predict \</span>
+                    </div>
+                    <div class="pl-4 text-muted">
+                        -H "Authorization: Bearer sk_live_..." \<br>
+                        -F "file=@image.jpg"
+                    </div>
+                    <div class="space-y-1 pt-4 text-green-400">
+                        <div>{</div>
+                        <div class="pl-4">"class": "fresh_apple",</div>
+                        <div class="pl-4">"confidence": 0.98,</div>
+                        <div class="pl-4">"latency_ms": 42</div>
+                        <div>}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="border-t border-border bg-surface/30 py-24">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-6 rounded-lg border border-border bg-background hover:border-gray-600 transition duration-300">
+                    <div class="w-10 h-10 rounded bg-surface border border-border flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Deploy via Drag & Drop</h3>
+                    <p class="text-muted leading-relaxed">Simply drag your trained model file into the dashboard. We handle the containerization and scaling.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="p-6 rounded-lg border border-border bg-background hover:border-gray-600 transition duration-300">
+                    <div class="w-10 h-10 rounded bg-surface border border-border flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Instant Inference</h3>
+                    <p class="text-muted leading-relaxed">Your API endpoint is live milliseconds after upload. Zero cold starts, optimized for speed.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="p-6 rounded-lg border border-border bg-background hover:border-gray-600 transition duration-300">
+                    <div class="w-10 h-10 rounded bg-surface border border-border flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Secure by Default</h3>
+                    <p class="text-muted leading-relaxed">Built-in API key management and usage tracking. Powered by StackAuth for robust security.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
