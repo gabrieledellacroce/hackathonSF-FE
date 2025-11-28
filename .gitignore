@@ -1,0 +1,82 @@
+# ----------------------------
+# Dependencies
+# ----------------------------
+node_modules/
+.pnp/
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnpm-store/
+
+# ----------------------------
+# Build outputs
+# ----------------------------
+# Next.js
+.next/
+out/
+.turbo/
+.vercel/
+
+# SvelteKit / Vite
+.svelte-kit/
+.vite/
+dist/
+build/
+
+# Parcel / Other tools
+.parcel-cache/
+.cache/
+
+# ----------------------------
+# Environment & secrets
+# ----------------------------
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+*.pem
+
+# ----------------------------
+# Logs & reports
+# ----------------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+coverage/
+*.lcov
+
+# ----------------------------
+# Editor & OS junk
+# ----------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# ----------------------------
+# Testing artifacts
+# ----------------------------
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+
+# ----------------------------
+# TypeScript
+# ----------------------------
+*.tsbuildinfo
+
+
