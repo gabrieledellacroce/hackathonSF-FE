@@ -110,7 +110,7 @@ export function ApiUsageChartCard() {
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
-        title="API Requests (14 giorni)"
+        title="API Requests (14 days)"
         dataForCsv={apiUsage}
         svgRef={ref}
         filename="api-requests-14d"
@@ -141,7 +141,7 @@ export function PlaygroundRunsChartCard() {
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
-        title="Playground Runs (7 giorni)"
+        title="Playground Runs (7 days)"
         dataForCsv={playgroundRuns}
         svgRef={ref}
         filename="playground-runs-7d"
@@ -166,7 +166,7 @@ export function AccuracyChartCard() {
   return (
     <div className="rounded-xl border border-white/10 p-4 flex items-center">
       <div className="flex-1">
-        <div className="text-sm text-muted mb-2">Accuracy stimata</div>
+        <div className="text-sm text-muted mb-2">Estimated accuracy</div>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <RadialBarChart
@@ -185,7 +185,7 @@ export function AccuracyChartCard() {
       </div>
       <div className="w-28 text-center">
         <div className="text-4xl font-light">{accuracy}%</div>
-        <div className="text-xs text-muted mt-1">su ultimi test</div>
+        <div className="text-xs text-muted mt-1">on recent tests</div>
       </div>
     </div>
   );
@@ -261,7 +261,7 @@ export function ModelBreakdownStackedBar() {
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
-        title="API Requests per modello (7 giorni, top 5)"
+        title="API Requests by model (7 days, top 5)"
         dataForCsv={modelBreakdown.data}
         svgRef={ref}
         filename="api-requests-by-model"
@@ -347,7 +347,7 @@ export function AccuracyByClass() {
   }));
   return (
     <div className="rounded-xl border border-white/10 p-4">
-      <div className="text-sm text-muted mb-2">Accuracy per classe</div>
+      <div className="text-sm text-muted mb-2">Accuracy by class</div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
         {data.map((d) => (
           <div key={d.name} className="h-28">
@@ -376,7 +376,7 @@ export function UsageHeatmap() {
   const max = Math.max(...values.flat());
   return (
     <div className="rounded-xl border border-white/10 p-4">
-      <div className="text-sm text-muted mb-3">Usage Heatmap (ora del giorno vs giorni)</div>
+      <div className="text-sm text-muted mb-3">Usage heatmap (hour of day vs days)</div>
       <div className="overflow-auto">
         <div className="inline-grid grid-rows-8 grid-cols-[60px_repeat(24,minmax(18px,1fr))] gap-1">
           <div />
