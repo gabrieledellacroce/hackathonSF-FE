@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <StackProvider
             app={stackServerApp}
-            lang="it-IT"
+            lang="en"
           >
             <StackTheme
               theme={{

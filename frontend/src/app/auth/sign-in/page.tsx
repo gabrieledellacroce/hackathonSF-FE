@@ -9,11 +9,20 @@ export default function CustomSignInPage() {
   return (
     <main className="min-h-[100svh] grid place-items-center px-6">
       <div className="w-full max-w-md mx-auto">
+        {/* Back */}
+        <a
+          href="/"
+          className="inline-flex items-center text-sm text-muted hover:text-white mb-6"
+          aria-label="Back to home"
+        >
+          <span className="text-lg">←</span>
+          <span className="sr-only">Back to home</span>
+        </a>
         {/* Brand */}
         <div className="text-center mb-8">
           <div className="text-xs tracking-widest text-muted">MODELMARKT</div>
           <p className="text-xs text-muted mt-2">
-            Continua per caricare modelli e generare API keys
+            Continue to upload models and generate API keys
           </p>
         </div>
 
