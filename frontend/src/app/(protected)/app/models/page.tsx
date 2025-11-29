@@ -1,5 +1,5 @@
 import React from "react";
-import { getModels } from "@/src/lib/api";
+import { getModels } from "@/lib/api";
 
 export default async function ModelsPage() {
   const { models } = await getModels();
@@ -21,7 +21,7 @@ export default async function ModelsPage() {
             <div className="text-lg font-medium mt-1">{m.name}</div>
             <p className="text-sm text-muted mt-2">{m.description}</p>
             <div className="text-xs text-muted mt-4">
-              Creato il {m.createdAt}
+              Created on {m.createdAt}
             </div>
           </div>
         ))}
