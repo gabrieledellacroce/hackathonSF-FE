@@ -1,17 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import { getModels } from "@/lib/api";
+import AddModelButton from "./AddModelButton";
 
 export default async function ModelsPage() {
   const { models } = await getModels();
   return (
     <section>
-      <h1
-        className="text-3xl font-light mb-6"
-        style={{ fontFamily: "var(--font-cormorant)" }}
-      >
-        Models
-      </h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1
+          className="text-3xl font-light"
+          style={{ fontFamily: "var(--font-cormorant)" }}
+        >
+          Models
+        </h1>
+        <AddModelButton />
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {models.map((m) => (
           <Link

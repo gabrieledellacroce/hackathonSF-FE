@@ -85,4 +85,29 @@ export async function getOrCreateApiKey(userId: string): Promise<string> {
   return c.apiKey;
 }
 
+export async function uploadModel(params: {
+  file: File | Blob;
+  name: string;
+  description?: string;
+  inputType?: string;
+  userId?: string | null;
+}): Promise<{ message: string; model: Model }> {
+  const base = getBackendUrl();
+  const form = new FormData();
+  form.append("model", params.file);
+  form.append("name", params.name);
+  if (params.description) form.append("description", params.description);
+  if (params.inputType) form.append("inputType", params.inputType);
+  if (params.userId) form.append("userId", params.userId);
+  const res = await fetch(`${base}/upload`, {
+    method: "POST",
+    body: form,
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Upload failed: ${res.status} ${text || ""}`.trim());
+  }
+  return (await res.json()) as { message: string; model: Model };
+}
+
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { runModelInference, getOrCreateApiKey } from "@/lib/api";
+import { runModelInference, getOrCreateApiKey, getModels } from "@/lib/api";
 import { useUser } from "@stackframe/stack";
 
 type RunResult = {
@@ -25,6 +25,7 @@ export default function FruitClassifierPage() {
   const user = useUser();
   const userId = (user as any)?.id || (user as any)?.userId || null;
   const [apiKey, setApiKey] = useState<string | null>(null);
+  const [modelId, setModelId] = useState<string | null>(process.env.NEXT_PUBLIC_FRUIT_MODEL_ID || null);
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [threshold, setThreshold] = useState<number>(0.5);
@@ -104,6 +105,25 @@ export default function FruitClassifierPage() {
     setOutput(null);
     const t0 = performance.now();
     try {
+      // resolve model id if not set yet
+      let targetId = modelId;
+      if (!targetId) {
+        try {
+          const { models } = await getModels();
+          const found =
+            models.find((m: any) =>
+              (m.name || "").toLowerCase().includes("fruit"),
+            ) || models[0];
+          if (found?.id) {
+            targetId = found.id;
+            setModelId(found.id);
+          }
+        } catch (e) {
+          console.warn("failed to resolve model id", e);
+        }
+      }
+      if (!targetId) throw new Error("No model available");
+
       let key = apiKey;
       if (!key && userId) {
         try {
@@ -113,7 +133,7 @@ export default function FruitClassifierPage() {
           console.warn("api key error", e);
         }
       }
-      const out = await runModelInference("fruit-classifier", file, { threshold, topK }, key || undefined);
+      const out = await runModelInference(targetId, file, { threshold, topK }, key || undefined);
       const t1 = performance.now();
       const latency = Math.max(0, Math.round(t1 - t0));
       setLatencyMs(latency);
