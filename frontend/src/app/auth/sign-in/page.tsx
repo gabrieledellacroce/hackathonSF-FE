@@ -10,15 +10,11 @@ export default function CustomSignInPage() {
     <main className="min-h-[100svh] grid place-items-center px-6">
       <div className="w-full max-w-md mx-auto">
         {/* Brand */}
-        <div className="text-center mb-10">
-          <div className="text-xs tracking-widest text-muted mb-3">MODELMARKT</div>
-          <h1
-            className="text-4xl md:text-5xl font-light"
-            style={{ fontFamily: "var(--font-cormorant)" }}
-          >
-            Accedi al tuo account
-          </h1>
-          <p className="text-sm text-muted mt-2">Continua per caricare modelli e generare API keys</p>
+        <div className="text-center mb-8">
+          <div className="text-xs tracking-widest text-muted">MODELMARKT</div>
+          <p className="text-xs text-muted mt-2">
+            Continua per caricare modelli e generare API keys
+          </p>
         </div>
 
         {/* Card */}
