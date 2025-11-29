@@ -244,7 +244,7 @@ export default function FruitClassifierPage() {
           onDrop={onDrop}
         >
           {imageUrl ? (
-            <div className="w-full grid gap-3">
+            <div className="w-full grid gap-3 relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imageUrl}
@@ -286,6 +286,12 @@ export default function FruitClassifierPage() {
                   </button>
                 )}
               </div>
+              {running && (
+                <div className="absolute inset-0 rounded-md bg-black/50 backdrop-blur-[1px] flex flex-col items-center justify-center z-10">
+                  <div className="h-10 w-10 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                  <div className="mt-2 text-xs text-white/90">Analisi in corso…</div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-4">
