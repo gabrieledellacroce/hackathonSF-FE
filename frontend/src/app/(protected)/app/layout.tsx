@@ -24,7 +24,7 @@ export default async function AppLayout({
   return (
     <div className="min-h-screen grid grid-cols-[240px_1fr]">
       {/* Sidebar */}
-      <aside className="border-r border-white/10 bg-surface/50 p-6">
+      <aside className="border-r border-white/10 bg-surface/50 p-6 flex flex-col">
         <div className="text-xs tracking-widest text-muted mb-6">MODELMARKT</div>
         <nav className="space-y-2">
           <Link
@@ -46,6 +46,14 @@ export default async function AppLayout({
             Settings
           </Link>
         </nav>
+        <div className="mt-auto pt-6">
+          <Link
+            href="/handler/sign-out"
+            className="block text-center px-3 py-2 rounded-md border border-white/10 hover:border-white/20 hover:bg-white/5 transition text-sm"
+          >
+            Sign out
+          </Link>
+        </div>
       </aside>
 
       {/* Content */}
