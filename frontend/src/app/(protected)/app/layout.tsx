@@ -22,9 +22,9 @@ export default async function AppLayout({
     user?.profileImageUrl || user?.imageUrl || null;
 
   return (
-    <div className="min-h-screen grid grid-cols-[240px_1fr]">
+    <div className="h-screen overflow-hidden grid grid-cols-[240px_1fr]">
       {/* Sidebar */}
-      <aside className="border-r border-white/10 bg-surface/50 p-6 flex flex-col">
+      <aside className="border-r border-white/10 bg-surface/50 p-6 flex flex-col h-screen overflow-hidden">
         <div className="text-xs tracking-widest text-muted mb-6">MODELMARKT</div>
         <nav className="space-y-2">
           <Link
@@ -57,7 +57,7 @@ export default async function AppLayout({
       </aside>
 
       {/* Content */}
-      <div className="min-h-screen flex flex-col">
+      <div className="h-screen flex flex-col overflow-hidden">
         {/* Top bar */}
         <header className="h-14 flex items-center justify-end px-6 border-b border-white/10 bg-transparent">
           <Link
@@ -83,7 +83,7 @@ export default async function AppLayout({
           </Link>
         </header>
 
-        <main className="p-8">{children}</main>
+        <main className="flex-1 overflow-y-auto p-8">{children}</main>
       </div>
     </div>
   );
