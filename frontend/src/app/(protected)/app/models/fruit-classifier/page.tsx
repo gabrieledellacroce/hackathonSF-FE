@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { runModelInference } from "@/src/lib/api";
+import { runModelInference } from "@/lib/api";
 
 type RunResult = {
   id: string;
