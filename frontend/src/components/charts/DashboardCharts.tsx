@@ -19,6 +19,12 @@ import {
 } from "recharts";
 import ReactDOMServer from "react-dom/server";
 
+function useMounted(): boolean {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  return mounted;
+}
+
 function genSeries(days: number, min = 100, max = 1200) {
   const out: { day: string; value: number }[] = [];
   const now = new Date();
@@ -34,10 +40,27 @@ function genSeries(days: number, min = 100, max = 1200) {
   return out;
 }
 
-const apiUsage = genSeries(14, 200, 2000);
-const playgroundRuns = genSeries(7, 20, 200);
-const latencyP95 = genSeries(14, 30, 180);
-const accuracy = Math.round(85 + Math.random() * 10); // 85-95%
+// Data is generated on the client after mount to avoid hydration mismatches
+function useChartData() {
+  const mounted = useMounted();
+  const apiUsage = React.useMemo(
+    () => (mounted ? genSeries(14, 200, 2000) : []),
+    [mounted]
+  );
+  const playgroundRuns = React.useMemo(
+    () => (mounted ? genSeries(7, 20, 200) : []),
+    [mounted]
+  );
+  const latencyP95 = React.useMemo(
+    () => (mounted ? genSeries(14, 30, 180) : []),
+    [mounted]
+  );
+  const accuracy = React.useMemo(
+    () => (mounted ? Math.round(85 + Math.random() * 10) : null),
+    [mounted]
+  ); // 85-95%
+  return { mounted, apiUsage, playgroundRuns, latencyP95, accuracy };
+}
 
 // Utils: CSV & SVG download
 function toCSV(rows: Array<Record<string, unknown>>): string {
@@ -106,7 +129,16 @@ function ChartHeader({
 }
 
 export function ApiUsageChartCard() {
+  const { mounted, apiUsage } = useChartData();
   const ref = React.useRef<HTMLDivElement>(null);
+  if (!mounted) {
+    return (
+      <div className="rounded-xl border border-white/10 p-4">
+        <ChartHeader title="API Requests (14 days)" filename="api-requests-14d" />
+        <div className="h-48 grid place-items-center text-xs text-muted">Loading…</div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
@@ -137,7 +169,16 @@ export function ApiUsageChartCard() {
 }
 
 export function PlaygroundRunsChartCard() {
+  const { mounted, playgroundRuns } = useChartData();
   const ref = React.useRef<HTMLDivElement>(null);
+  if (!mounted) {
+    return (
+      <div className="rounded-xl border border-white/10 p-4">
+        <ChartHeader title="Playground Runs (7 days)" filename="playground-runs-7d" />
+        <div className="h-48 grid place-items-center text-xs text-muted">Loading…</div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
@@ -162,7 +203,22 @@ export function PlaygroundRunsChartCard() {
 }
 
 export function AccuracyChartCard() {
+  const { mounted, accuracy } = useChartData();
   const radialData = [{ name: "Accuracy", value: accuracy, fill: "#ffffff" }];
+  if (!mounted || accuracy == null) {
+    return (
+      <div className="rounded-xl border border-white/10 p-4 flex items-center">
+        <div className="flex-1">
+          <div className="text-sm text-muted mb-2">Estimated accuracy</div>
+          <div className="h-48 grid place-items-center text-xs text-muted">Loading…</div>
+        </div>
+        <div className="w-28 text-center">
+          <div className="text-4xl font-light">—</div>
+          <div className="text-xs text-muted mt-1">on recent tests</div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-xl border border-white/10 p-4 flex items-center">
       <div className="flex-1">
@@ -192,7 +248,16 @@ export function AccuracyChartCard() {
 }
 
 export function LatencyChartCard() {
+  const { mounted, latencyP95 } = useChartData();
   const ref = React.useRef<HTMLDivElement>(null);
+  if (!mounted) {
+    return (
+      <div className="rounded-xl border border-white/10 p-4">
+        <ChartHeader title="Latency P95 (ms)" filename="latency-p95-14d" />
+        <div className="h-48 grid place-items-center text-xs text-muted">Loading…</div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
