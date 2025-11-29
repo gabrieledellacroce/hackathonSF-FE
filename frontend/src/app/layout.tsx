@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import React from "react";
-import { StackProvider } from "@stackframe/stack";
+import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../../stack/server";
 import { Providers } from "./providers";
 
@@ -20,8 +20,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.variable} ${cormorant.variable} ${jetbrains.variable} antialiased`}>
         <Providers>
-          <StackProvider app={stackServerApp} lang="it-IT">
-            {children}
+          <StackProvider
+            app={stackServerApp}
+            lang="it-IT"
+          >
+            <StackTheme
+              theme={{
+                radius: "10px",
+                dark: {
+                  primary: "#ffffff",
+                },
+              }}
+            >
+              {children}
+            </StackTheme>
           </StackProvider>
         </Providers>
       </body>

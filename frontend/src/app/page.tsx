@@ -53,7 +53,7 @@ export default function HomePage() {
             <a href="#" className="hover:text-white transition">
               Docs
             </a>
-            <a href="/handler/sign-in" className="border-b border-white/10 pb-1 hover:border-white transition">
+            <a href="/auth/sign-in" className="border-b border-white/10 pb-1 hover:border-white transition">
               Sign In
             </a>
           </div>

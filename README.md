@@ -185,3 +185,527 @@ Backend has no env vars (hackathon mode).
 - cors
 
 
+## ModelMarkt Backend API Documentation
+
+### Base URL
+
+`http://localhost:3001`
+
+### Project Overview
+
+ModelMarkt is a marketplace API for machine learning models. Users can:
+
+- Upload ML models (.keras, .h5, .pt, .onnx)
+- Browse and search available models
+- Run inference on models by uploading images
+- Manage API keys for authentication
+
+Tech Stack:
+
+- Node.js + Express + TypeScript
+- Python (TensorFlow/Keras) for inference
+- File-based storage (JSON files)
+
+### Data Types
+
+```ts
+// Model
+{
+  id: string;              // UUID format
+  name: string;            // Model display name (max 100 chars)
+  description: string;     // Model description (max 1000 chars)
+  filename: string;        // Stored filename (e.g., "uuid.keras")
+  inputType: "image" | "text" | "json";
+  createdAt: string;       // ISO 8601 timestamp
+  userId: string | null;   // Owner's user ID
+  callCount: number;       // Number of inference calls
+}
+
+// InferenceResult
+{
+  success: boolean;
+  predictions: number[][];
+  predicted_class: number;
+  confidence: number;
+}
+
+// Pagination
+{
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+```
+
+### Authentication
+
+Protected endpoints require Bearer token authentication.
+
+Header format:
+
+```
+Authorization: Bearer <apiKey>
+```
+
+API Key format: 64-character hexadecimal string
+
+Protected endpoints:
+
+- POST   `/models/:id`  (run inference)
+- PATCH  `/models/:id`  (update model)
+- DELETE `/models/:id`  (delete model)
+
+### Endpoints
+
+#### Health Check
+
+GET `/`
+
+Description: Check if the API is running
+
+Response 200:
+
+```json
+{
+  "status": "ok",
+  "message": "ModelMarkt API is running"
+}
+```
+
+#### API Key Management
+
+POST `/apikey/create`
+
+Description: Create a new API key for a user
+
+Request Body (JSON):
+
+```json
+{
+  "stackauthUserId": "string"
+}
+```
+
+Response 201:
+
+```json
+{
+  "apiKey": "64-char-hex-string"
+}
+```
+
+Response 400:
+
+```json
+{ "error": "stackauthUserId is required" }
+```
+
+Response 409:
+
+```json
+{ "error": "API key already exists for this user" }
+```
+
+---
+
+POST `/apikey/regenerate`
+
+Description: Generate a new API key (replaces existing)
+
+Request Body (JSON):
+
+```json
+{
+  "stackauthUserId": "string"
+}
+```
+
+Response 200:
+
+```json
+{
+  "apiKey": "64-char-hex-string"
+}
+```
+
+Response 400:
+
+```json
+{ "error": "stackauthUserId is required" }
+```
+
+---
+
+GET `/apikey/get?userId=<userId>`
+
+Description: Retrieve API key for a user
+
+Query Parameters:
+
+- userId: string (Required)
+
+Response 200:
+
+```json
+{
+  "apiKey": "64-char-hex-string"
+}
+```
+
+Response 400:
+
+```json
+{ "error": "userId query param is required" }
+```
+
+Response 404:
+
+```json
+{ "error": "API key not found" }
+```
+
+---
+
+DELETE `/apikey/revoke`
+
+Description: Revoke/delete a user's API key
+
+Request Body (JSON):
+
+```json
+{
+  "stackauthUserId": "string"
+}
+```
+
+Response 200:
+
+```json
+{ "message": "API key revoked" }
+```
+
+Response 404:
+
+```json
+{ "error": "API key not found" }
+```
+
+#### Model Upload
+
+POST `/upload`
+
+Description: Upload a new ML model file
+
+Content-Type: `multipart/form-data`
+
+Form Fields:
+
+- model: File         (Required — .keras, .h5, .pt, or .onnx; max 1GB)
+- name: string        (Required — model name; max 100 chars)
+- description: string (Optional — max 1000 chars)
+- inputType: string   (Optional — "image", "text", or "json"; default: "image")
+- userId: string      (Optional — owner's user ID)
+
+Response 201:
+
+```json
+{
+  "message": "Model uploaded successfully",
+  "model": {
+    "id": "uuid",
+    "name": "My Model",
+    "description": "Optional description",
+    "filename": "uuid.keras",
+    "inputType": "image",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "userId": "user-123",
+    "callCount": 0
+  }
+}
+```
+
+Response 400 (no file or validation errors):
+
+```json
+{ "error": "No file uploaded" }
+```
+
+or
+
+```json
+{ "errors": ["Model name is required"] }
+```
+
+or
+
+```json
+{ "error": "Invalid file type. Allowed: .keras, .h5, .pt, .onnx" }
+```
+
+#### Model Operations
+
+GET `/models`
+
+Description: List all models with optional search and pagination
+
+Query Parameters:
+
+- search: string (Optional — filter by name/description)
+- page: number  (Optional — default: 1)
+- limit: number (Optional — default: 20)
+
+Response 200:
+
+```json
+{
+  "models": [],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 0,
+    "totalPages": 0
+  }
+}
+```
+
+---
+
+GET `/models/:id`
+
+Description: Get a single model by ID
+
+Path Parameters:
+
+- id: string (Model UUID)
+
+Response 200:
+
+```json
+{
+  "model": {
+    "id": "uuid",
+    "name": "My Model",
+    "description": "Optional description",
+    "filename": "uuid.keras",
+    "inputType": "image",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "userId": "user-123",
+    "callCount": 0
+  }
+}
+```
+
+Response 400:
+
+```json
+{ "error": "Invalid model ID format" }
+```
+
+Response 404:
+
+```json
+{ "error": "Model not found" }
+```
+
+---
+
+POST `/models/:id`
+
+Description: Run inference on a model with an image
+
+Authentication: Required
+
+Content-Type: `multipart/form-data`
+
+Path Parameters:
+
+- id: string (Model UUID)
+
+Form Fields:
+
+- image: File (Required — .jpg, .jpeg, .png, or .webp; max 10MB)
+
+Response 200:
+
+```json
+{
+  "model": "My Model",
+  "result": {
+    "success": true,
+    "predictions": [[0.1, 0.9]],
+    "predicted_class": 1,
+    "confidence": 0.9
+  }
+}
+```
+
+Response 400:
+
+```json
+{ "error": "Image file required" }
+```
+
+Response 401 (auth issues):
+
+```json
+{ "error": "Missing Authorization header" }
+```
+
+or
+
+```json
+{ "error": "Invalid Authorization format. Use: Bearer <apiKey>" }
+```
+
+or
+
+```json
+{ "error": "Invalid API key format" }
+```
+
+or
+
+```json
+{ "error": "Invalid API key" }
+```
+
+Response 404:
+
+```json
+{ "error": "Model not found" }
+```
+
+---
+
+PATCH `/models/:id`
+
+Description: Update model metadata
+
+Authentication: Required (must be model owner)
+
+Path Parameters:
+
+- id: string (Model UUID)
+
+Request Body (JSON):
+
+```json
+{
+  "name": "New name",
+  "description": "New description"
+}
+```
+
+Response 200:
+
+```json
+{
+  "model": {
+    "id": "uuid",
+    "name": "New name",
+    "description": "New description",
+    "filename": "uuid.keras",
+    "inputType": "image",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "userId": "user-123",
+    "callCount": 1
+  }
+}
+```
+
+Response 401:
+
+```json
+{ "error": "Missing Authorization header" }
+```
+
+Response 403:
+
+```json
+{ "error": "You can only edit your own models" }
+```
+
+Response 404:
+
+```json
+{ "error": "Model not found" }
+```
+
+---
+
+DELETE `/models/:id`
+
+Description: Delete a model and its file
+
+Authentication: Required (must be model owner)
+
+Path Parameters:
+
+- id: string (Model UUID)
+
+Response 200:
+
+```json
+{ "message": "Model deleted" }
+```
+
+Response 401:
+
+```json
+{ "error": "Missing Authorization header" }
+```
+
+Response 403:
+
+```json
+{ "error": "You can only delete your own models" }
+```
+
+Response 404:
+
+```json
+{ "error": "Model not found" }
+```
+
+### Error Responses
+
+All errors follow this format:
+
+```json
+{
+  "error": "string",
+  "errors": ["string"] // Only for validation errors
+}
+```
+
+HTTP Status Codes:
+
+- 200 - Success
+- 201 - Created
+- 400 - Bad Request / Validation Error
+- 401 - Unauthorized (missing or invalid auth)
+- 403 - Forbidden (not owner)
+- 404 - Not Found
+- 409 - Conflict (duplicate resource)
+- 500 - Internal Server Error
+
+### Frontend Integration Notes
+
+1. User Registration Flow:
+   - After user signs up (via StackAuth), call POST `/apikey/create`
+   - Store the API key securely for authenticated requests
+2. Model Upload Flow:
+   - Use `FormData` for multipart/form-data upload
+   - Include `userId` to associate model with user
+3. Inference Flow:
+   - Requires valid API key in `Authorization` header
+   - Upload image as `FormData`
+   - Response includes `predicted_class` and `confidence`
+4. Model Ownership:
+   - Users can only edit/delete models where `model.userId` matches their ID
+   - Models with `userId: null` can be edited/deleted by anyone (legacy)
+5. Pagination:
+   - Default 20 items per page
+   - Use `page` and `limit` query params for custom pagination
+
