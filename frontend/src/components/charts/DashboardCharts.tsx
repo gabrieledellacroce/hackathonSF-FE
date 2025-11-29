@@ -19,6 +19,19 @@ import {
 } from "recharts";
 import ReactDOMServer from "react-dom/server";
 
+const tooltipProps = {
+  contentStyle: {
+    background: "rgba(255,255,255,0.96)",
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: 8,
+    color: "#111111",
+    boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+  } as React.CSSProperties,
+  labelStyle: { color: "#111111" } as React.CSSProperties,
+  itemStyle: { color: "#111111" } as React.CSSProperties,
+  cursor: { fill: "rgba(255,255,255,0.08)" } as any,
+};
+
 function useMounted(): boolean {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
@@ -153,7 +166,7 @@ export function ApiUsageChartCard() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="day" stroke="rgba(255,255,255,0.5)" />
             <YAxis stroke="rgba(255,255,255,0.5)" />
-            <Tooltip />
+            <Tooltip {...tooltipProps} />
             <Line
               type="monotone"
               dataKey="value"
@@ -193,7 +206,7 @@ export function PlaygroundRunsChartCard() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="day" stroke="rgba(255,255,255,0.5)" />
             <YAxis stroke="rgba(255,255,255,0.5)" />
-            <Tooltip />
+            <Tooltip {...tooltipProps} />
             <Bar dataKey="value" fill="#ffffff" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
@@ -234,7 +247,7 @@ export function AccuracyChartCard() {
             >
               <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
               <RadialBar background dataKey="value" cornerRadius={10} />
-              <Tooltip />
+              <Tooltip {...tooltipProps} />
             </RadialBarChart>
           </ResponsiveContainer>
         </div>
@@ -278,7 +291,7 @@ export function LatencyChartCard() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="day" stroke="rgba(255,255,255,0.5)" />
             <YAxis stroke="rgba(255,255,255,0.5)" />
-            <Tooltip />
+            <Tooltip {...tooltipProps} />
             <Area type="monotone" dataKey="value" stroke="#ffffff" fill="url(#grad)" />
           </AreaChart>
         </ResponsiveContainer>
@@ -347,7 +360,7 @@ export function ModelBreakdownStackedBar() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="day" stroke="rgba(255,255,255,0.5)" />
             <YAxis stroke="rgba(255,255,255,0.5)" />
-            <Tooltip />
+            <Tooltip {...tooltipProps} />
             {modelBreakdown.models.map((m, idx) => (
               <Bar key={m} dataKey={m} stackId="a" fill={`hsl(${(idx * 60) % 360} 10% 90%)`} />
             ))}
@@ -445,7 +458,7 @@ export function AccuracyByClass() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={[d]}>
                 <XAxis dataKey="name" stroke="rgba(255,255,255,0.5)" />
-                <Tooltip />
+                <Tooltip {...tooltipProps} />
                 <Bar dataKey="correct" stackId="a" fill="#ffffff" />
                 <Bar dataKey="wrong" stackId="a" fill="rgba(255,255,255,0.3)" />
               </BarChart>
