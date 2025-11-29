@@ -234,7 +234,9 @@ export function KpiCard({
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <div className="text-sm text-muted">{label}</div>
-      <div className="text-3xl font-light mt-2">{value}</div>
+      <div className="text-3xl font-light mt-2" suppressHydrationWarning>
+        {value}
+      </div>
       {hint && <div className="text-xs text-muted mt-1">{hint}</div>}
     </div>
   );

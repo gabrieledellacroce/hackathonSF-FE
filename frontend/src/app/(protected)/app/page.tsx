@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ApiUsageChartCard,
   PlaygroundRunsChartCard,
@@ -14,13 +14,21 @@ import {
 } from "@/components/charts/DashboardCharts";
 
 export default function AppHomePage() {
-  const kpis = useMemo(() => {
-    return {
+  const [kpis, setKpis] = useState<{
+    api24h: number;
+    runs7d: number;
+    acc: number;
+    p95: number;
+  } | null>(null);
+
+  // Generate KPIs only on client to avoid SSR/CSR mismatch
+  useEffect(() => {
+    setKpis({
       api24h: Math.floor(Math.random() * 5000 + 2000),
       runs7d: Math.floor(Math.random() * 800 + 200),
       acc: Math.floor(Math.random() * 10 + 85),
       p95: Math.floor(Math.random() * 120 + 40),
-    };
+    });
   }, []);
   return (
     <section className="space-y-8">
@@ -32,10 +40,10 @@ export default function AppHomePage() {
           Overview
         </h1>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="API requests (24h)" value={`${kpis.api24h}`} hint="+12% vs ieri" />
-          <KpiCard label="Playground runs (7d)" value={`${kpis.runs7d}`} hint="+4% vs settimana scorsa" />
-          <KpiCard label="Accuracy stimata" value={`${kpis.acc}%`} hint="sui test recenti" />
-          <KpiCard label="Latency P95" value={`${kpis.p95} ms`} hint="-8% vs 7d" />
+          <KpiCard label="API requests (24h)" value={kpis ? `${kpis.api24h}` : "—"} hint="+12% vs ieri" />
+          <KpiCard label="Playground runs (7d)" value={kpis ? `${kpis.runs7d}` : "—"} hint="+4% vs settimana scorsa" />
+          <KpiCard label="Accuracy stimata" value={kpis ? `${kpis.acc}%` : "—"} hint="sui test recenti" />
+          <KpiCard label="Latency P95" value={kpis ? `${kpis.p95} ms` : "—"} hint="-8% vs 7d" />
         </div>
       </div>
 
