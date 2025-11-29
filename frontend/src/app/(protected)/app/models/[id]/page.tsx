@@ -197,7 +197,7 @@ export default function ModelPage({ params }: { params: { id: string } }) {
           >
             {modelName}
           </h1>
-          <p className="text-sm text-muted">Upload un’immagine e ottieni la classe con confidenza.</p>
+          <p className="text-sm text-muted">Upload an image and get the class with confidence.</p>
         </div>
         <div className="flex items-center gap-4">
           <label className="flex items-center gap-2 text-sm text-muted cursor-pointer select-none">
@@ -263,21 +263,21 @@ export default function ModelPage({ params }: { params: { id: string } }) {
                     onClick={run}
                     disabled={running}
                   >
-                    {running ? "Analisi in corso…" : "Esegui modello"}
+                    {running ? "Analyzing…" : "Run model"}
                   </button>
                 )}
               </div>
               {running && (
                 <div className="absolute inset-0 rounded-md bg-black/50 backdrop-blur-[1px] flex flex-col items-center justify-center z-10">
                   <div className="h-10 w-10 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                  <div className="mt-2 text-xs text-white/90">Analisi in corso…</div>
+                  <div className="mt-2 text-xs text-white/90">Analyzing…</div>
                 </div>
               )}
             </div>
           ) : (
             <div className="space-y-4">
               <div className="text-sm text-muted">
-                Drag & drop un’immagine, incolla ⌘V o carica un file.
+                Drag & drop an image, paste ⌘V, or upload a file.
               </div>
               <div className="flex gap-3 justify-center">
                 <button
@@ -332,8 +332,7 @@ export default function ModelPage({ params }: { params: { id: string } }) {
               />
             </label>
             <div className="text-xs text-muted">
-              I parametri sono salvati nell’URL. Condividi la pagina per riprodurre la stessa
-              configurazione.
+              Parameters are saved in the URL. Share the page to reproduce the same configuration.
             </div>
           </div>
         </div>
@@ -374,7 +373,7 @@ export default function ModelPage({ params }: { params: { id: string } }) {
               </pre>
             </div>
           ) : (
-            <div className="text-sm text-muted">Nessun risultato ancora.</div>
+            <div className="text-sm text-muted">No results yet.</div>
           )}
         </div>
 
@@ -382,7 +381,7 @@ export default function ModelPage({ params }: { params: { id: string } }) {
           <div className="text-sm text-muted mb-3">Recent</div>
           <div className="space-y-3">
             {history.length === 0 && (
-              <div className="text-sm text-muted">Le ultime esecuzioni appariranno qui.</div>
+              <div className="text-sm text-muted">Recent runs will appear here.</div>
             )}
             {history.map((r) => (
               <div
