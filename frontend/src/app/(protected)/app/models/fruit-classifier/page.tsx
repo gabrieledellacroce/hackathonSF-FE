@@ -282,7 +282,7 @@ export default function FruitClassifierPage() {
                     onClick={run}
                     disabled={running}
                   >
-                    {running ? "Running…" : "Run model"}
+                    {running ? "Analisi in corso…" : "Esegui modello"}
                   </button>
                 )}
               </div>
