@@ -309,22 +309,30 @@ export function KpiCard({
 
 // Advanced additions
 // 1) Stacked bar per modello (top 5)
-function genModelBreakdown() {
-  const models = ["fruit", "dog", "car", "face", "doc"];
-  const days = genSeries(7, 1, 1).map((d) => d.day);
-  const data = days.map((day) => {
-    const row: any = { day };
-    models.forEach((m) => {
-      row[m] = Math.floor(Math.random() * 800 + 50);
-    });
-    return row;
-  });
-  return { models, data };
-}
-const modelBreakdown = genModelBreakdown();
-
 export function ModelBreakdownStackedBar() {
+  const mounted = useMounted();
+  const modelBreakdown = React.useMemo(() => {
+    if (!mounted) return { models: [] as string[], data: [] as Array<Record<string, number | string>> };
+    const models = ["fruit", "dog", "car", "face", "doc"];
+    const days = genSeries(7, 1, 1).map((d) => d.day);
+    const data = days.map((day) => {
+      const row: Record<string, number | string> = { day };
+      models.forEach((m) => {
+        row[m] = Math.floor(Math.random() * 800 + 50);
+      });
+      return row;
+    });
+    return { models, data };
+  }, [mounted]);
   const ref = React.useRef<HTMLDivElement>(null);
+  if (!mounted) {
+    return (
+      <div className="rounded-xl border border-white/10 p-4">
+        <ChartHeader title="API Requests by model (7 days, top 5)" filename="api-requests-by-model" />
+        <div className="h-56 grid place-items-center text-xs text-muted">Loading…</div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <ChartHeader
@@ -352,12 +360,16 @@ export function ModelBreakdownStackedBar() {
 
 // 2) Percentili latency mini-cards
 export function LatencyPercentilesCards() {
-  // simulate monotonic percentiles
-  const p50 = Math.floor(Math.random() * 40 + 40);
-  const p90 = p50 + Math.floor(Math.random() * 40 + 20);
-  const p95 = p90 + Math.floor(Math.random() * 30 + 10);
-  const p99 = p95 + Math.floor(Math.random() * 40 + 20);
-  const max = p99;
+  const mounted = useMounted();
+  const { p50, p90, p95, p99, max } = React.useMemo(() => {
+    if (!mounted) return { p50: 0, p90: 0, p95: 0, p99: 0, max: 1 };
+    const p50 = Math.floor(Math.random() * 40 + 40);
+    const p90 = p50 + Math.floor(Math.random() * 40 + 20);
+    const p95 = p90 + Math.floor(Math.random() * 30 + 10);
+    const p99 = p95 + Math.floor(Math.random() * 40 + 20);
+    const max = p99;
+    return { p50, p90, p95, p99, max };
+  }, [mounted]);
   const items = [
     { label: "P50", value: p50 },
     { label: "P90", value: p90 },
@@ -369,7 +381,7 @@ export function LatencyPercentilesCards() {
       {items.map((it) => (
         <div key={it.label} className="rounded-xl border border-white/10 p-4">
           <div className="text-sm text-muted">{it.label}</div>
-          <div className="text-2xl font-light mt-1">{it.value} ms</div>
+          <div className="text-2xl font-light mt-1">{mounted ? `${it.value} ms` : "—"}</div>
           <div className="h-2 w-full bg-white/10 rounded mt-2 overflow-hidden">
             <div
               className="h-full bg-white rounded"
@@ -384,9 +396,14 @@ export function LatencyPercentilesCards() {
 
 // 3) Error rate & success rate (stacked bar horizontal)
 export function ErrorRateCard() {
-  const success = Math.round(95 + Math.random() * 4 * 10) / 10; // ~95-99.9
-  const err4 = Math.round((100 - success) * 0.7 * 10) / 10;
-  const err5 = Math.max(0, Math.round((100 - success - err4) * 10) / 10);
+  const mounted = useMounted();
+  const { success, err4, err5 } = React.useMemo(() => {
+    if (!mounted) return { success: 0, err4: 0, err5: 0 };
+    const success = Math.round(95 + Math.random() * 4 * 10) / 10; // ~95-99.9
+    const err4 = Math.round((100 - success) * 0.7 * 10) / 10;
+    const err5 = Math.max(0, Math.round((100 - success - err4) * 10) / 10);
+    return { success, err4, err5 };
+  }, [mounted]);
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <div className="text-sm text-muted mb-2">Success / 4xx / 5xx</div>
@@ -396,9 +413,9 @@ export function ErrorRateCard() {
         <div className="bg-white/20" style={{ width: `${err5}%` }} />
       </div>
       <div className="text-xs text-muted mt-2 flex gap-4">
-        <span>Success: {success}%</span>
-        <span>4xx: {err4}%</span>
-        <span>5xx: {err5}%</span>
+        <span>Success: {mounted ? `${success}%` : "—"}</span>
+        <span>4xx: {mounted ? `${err4}%` : "—"}</span>
+        <span>5xx: {mounted ? `${err5}%` : "—"}</span>
       </div>
     </div>
   );
@@ -406,12 +423,19 @@ export function ErrorRateCard() {
 
 // 4) Accuracy by class (small multiples)
 export function AccuracyByClass() {
+  const mounted = useMounted();
   const classes = ["fresh", "rotten", "green", "red", "unknown"];
-  const data = classes.map((c) => ({
-    name: c,
-    correct: Math.floor(Math.random() * 80 + 10),
-    wrong: Math.floor(Math.random() * 20 + 1),
-  }));
+  const data = React.useMemo(
+    () =>
+      mounted
+        ? classes.map((c) => ({
+            name: c,
+            correct: Math.floor(Math.random() * 80 + 10),
+            wrong: Math.floor(Math.random() * 20 + 1),
+          }))
+        : [],
+    [mounted]
+  );
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <div className="text-sm text-muted mb-2">Accuracy by class</div>
@@ -428,6 +452,9 @@ export function AccuracyByClass() {
             </ResponsiveContainer>
           </div>
         ))}
+        {!mounted && (
+          <div className="text-xs text-muted">Loading…</div>
+        )}
       </div>
     </div>
   );
@@ -435,12 +462,20 @@ export function AccuracyByClass() {
 
 // 5) Usage heatmap (ora x giorno)
 export function UsageHeatmap() {
+  const mounted = useMounted();
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const hours = Array.from({ length: 24 }, (_, i) => i);
-  const values: number[][] = days.map(() =>
-    hours.map(() => Math.floor(Math.random() * 100))
+  const values: number[][] = React.useMemo(
+    () =>
+      mounted
+        ? days.map(() => hours.map(() => Math.floor(Math.random() * 100)))
+        : [],
+    [mounted]
   );
-  const max = Math.max(...values.flat());
+  const max = React.useMemo(
+    () => (values.length ? Math.max(...values.flat()) : 1),
+    [values]
+  );
   return (
     <div className="rounded-xl border border-white/10 p-4">
       <div className="text-sm text-muted mb-3">Usage heatmap (hour of day vs days)</div>
@@ -452,23 +487,27 @@ export function UsageHeatmap() {
               {h}
             </div>
           ))}
-          {days.map((d, r) => (
-            <React.Fragment key={d}>
-              <div className="text-xs text-muted pr-2 flex items-center">{d}</div>
-              {hours.map((h, c) => {
-                const v = values[r][c];
-                const opacity = v / max;
-                return (
-                  <div
-                    key={`${r}-${c}`}
-                    title={`${d} ${h}:00 — ${v}`}
-                    className="h-5 rounded"
-                    style={{ background: `rgba(255,255,255,${0.15 + opacity * 0.7})` }}
-                  />
-                );
-              })}
-            </React.Fragment>
-          ))}
+          {mounted ? (
+            days.map((d, r) => (
+              <React.Fragment key={d}>
+                <div className="text-xs text-muted pr-2 flex items-center">{d}</div>
+                {hours.map((h, c) => {
+                  const v = values[r][c];
+                  const opacity = v / max;
+                  return (
+                    <div
+                      key={`${r}-${c}`}
+                      title={`${d} ${h}:00 — ${v}`}
+                      className="h-5 rounded"
+                      style={{ background: `rgba(255,255,255,${0.15 + opacity * 0.7})` }}
+                    />
+                  );
+                })}
+              </React.Fragment>
+            ))
+          ) : (
+            <div className="text-xs text-muted">Loading…</div>
+          )}
         </div>
       </div>
     </div>

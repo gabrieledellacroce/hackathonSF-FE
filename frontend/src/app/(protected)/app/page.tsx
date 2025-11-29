@@ -40,9 +40,9 @@ export default function AppHomePage() {
           Overview
         </h1>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="API requests (24h)" value={kpis ? `${kpis.api24h}` : "—"} hint="+12% vs ieri" />
-          <KpiCard label="Playground runs (7d)" value={kpis ? `${kpis.runs7d}` : "—"} hint="+4% vs settimana scorsa" />
-          <KpiCard label="Accuracy stimata" value={kpis ? `${kpis.acc}%` : "—"} hint="sui test recenti" />
+          <KpiCard label="API requests (24h)" value={kpis ? `${kpis.api24h}` : "—"} hint="+12% vs yesterday" />
+          <KpiCard label="Playground runs (7d)" value={kpis ? `${kpis.runs7d}` : "—"} hint="+4% vs last week" />
+          <KpiCard label="Estimated accuracy" value={kpis ? `${kpis.acc}%` : "—"} hint="on recent tests" />
           <KpiCard label="Latency P95" value={kpis ? `${kpis.p95} ms` : "—"} hint="-8% vs 7d" />
         </div>
       </div>
