@@ -38,7 +38,7 @@ export async function runModelInference(
 ): Promise<unknown> {
   if (useMock()) return mockRunModel(modelId, file, params);
   const form = new FormData();
-  form.append("file", file);
+  form.append("image", file);
   if (params) {
     form.append("params", JSON.stringify(params));
   }
