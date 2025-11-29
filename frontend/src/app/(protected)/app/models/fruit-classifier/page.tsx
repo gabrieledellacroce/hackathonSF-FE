@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { runModelInference } from "@/lib/api";
+import { runModelInference, getOrCreateApiKey } from "@/lib/api";
+import { useUser } from "@stackframe/stack";
 
 type RunResult = {
   id: string;
@@ -21,6 +22,9 @@ function bytesToReadable(b: number) {
 }
 
 export default function FruitClassifierPage() {
+  const user = useUser();
+  const userId = (user as any)?.id || (user as any)?.userId || null;
+  const [apiKey, setApiKey] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [threshold, setThreshold] = useState<number>(0.5);
@@ -100,7 +104,16 @@ export default function FruitClassifierPage() {
     setOutput(null);
     const t0 = performance.now();
     try {
-      const out = await runModelInference("fruit-classifier", file, { threshold, topK });
+      let key = apiKey;
+      if (!key && userId) {
+        try {
+          key = await getOrCreateApiKey(userId);
+          setApiKey(key);
+        } catch (e) {
+          console.warn("api key error", e);
+        }
+      }
+      const out = await runModelInference("fruit-classifier", file, { threshold, topK }, key || undefined);
       const t1 = performance.now();
       const latency = Math.max(0, Math.round(t1 - t0));
       setLatencyMs(latency);
@@ -224,6 +237,13 @@ export default function FruitClassifierPage() {
                 {latencyMs != null && <span>· {latencyMs} ms</span>}
               </div>
               <div className="flex justify-center gap-3">
+                <button
+                  className="px-3 py-2 rounded-md border border-white/10 hover:bg-white/5 text-sm"
+                  onClick={run}
+                  disabled={running || !file}
+                >
+                  TEST
+                </button>
                 <button
                   className="px-3 py-2 rounded-md border border-white/10 hover:bg-white/5 text-sm"
                   onClick={onPick}

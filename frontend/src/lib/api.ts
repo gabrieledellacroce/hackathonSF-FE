@@ -33,7 +33,8 @@ export async function getModels(): Promise<{ models: Model[] }> {
 export async function runModelInference(
   modelId: string,
   file: File | Blob,
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>,
+  apiKey?: string
 ): Promise<unknown> {
   if (useMock()) return mockRunModel(modelId, file, params);
   const form = new FormData();
@@ -42,12 +43,46 @@ export async function runModelInference(
     form.append("params", JSON.stringify(params));
   }
   const base = getBackendUrl();
-  const res = await fetch(`${base}/model/${encodeURIComponent(modelId)}`, {
+  const res = await fetch(`${base}/models/${encodeURIComponent(modelId)}`, {
     method: "POST",
     body: form,
+    headers: {
+      ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
+    },
   });
   if (!res.ok) throw new Error(`Inference failed: ${res.status}`);
   return res.json();
+}
+
+export async function getOrCreateApiKey(userId: string): Promise<string> {
+  const cacheKey = `mm_api_key_${userId}`;
+  const cached = typeof window !== "undefined" ? localStorage.getItem(cacheKey) : null;
+  if (cached) return cached;
+  const base = getBackendUrl();
+  // try get
+  const getRes = await fetch(`${base}/apikey/get?userId=${encodeURIComponent(userId)}`, {
+    cache: "no-store",
+  });
+  if (getRes.ok) {
+    const j = (await getRes.json()) as { apiKey: string };
+    if (j?.apiKey) {
+      if (typeof window !== "undefined") localStorage.setItem(cacheKey, j.apiKey);
+      return j.apiKey;
+    }
+  }
+  // create
+  const createRes = await fetch(`${base}/apikey/create`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ stackauthUserId: userId }),
+  });
+  if (!createRes.ok) {
+    throw new Error(`API key create failed: ${createRes.status}`);
+  }
+  const c = (await createRes.json()) as { apiKey: string };
+  if (!c?.apiKey) throw new Error("API key not returned");
+  if (typeof window !== "undefined") localStorage.setItem(cacheKey, c.apiKey);
+  return c.apiKey;
 }
 
 
