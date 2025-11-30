@@ -79,4 +79,14 @@ test-results/
 # ----------------------------
 *.tsbuildinfo
 
+# ----------------------------
+# Project-specific: backend/frontend deps & virtual envs
+# ----------------------------
+frontend/node_modules/
+backend/node_modules/
+backend/venv/
+backend/venv-tf/
+backend/temp/
+backend/dist/
+
 
